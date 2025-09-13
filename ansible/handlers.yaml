@@ -1,0 +1,26 @@
+---
+- name: install webserver handler block playbook
+  hosts: all
+  tasks:
+  - name: learning block
+    block:
+    - name: launch webserver use template
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+    rescue:
+    - name: copy template file to documentroot
+      template:
+        src: index.j2
+        dest: /var/www/html/index.html
+      notify: restart_service
+    always:
+    - name: running everything properly
+      debug:
+        msg: "all good"
+  handlers:
+  - name: restart_service
+    service:
+      name: apache2
+      state: restarted

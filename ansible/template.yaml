@@ -1,0 +1,12 @@
+---
+- name: Learn Ansible Template Concept
+  hosts: web
+  become: yes
+  vars:
+    username: "student"
+    welcome_message: "Welcome to Ansible Templates!"
+  tasks:
+  - name: copy template file
+    template:
+      src: t2.j2
+      dest: /tmp/welcome.txt

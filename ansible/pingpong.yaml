@@ -1,0 +1,7 @@
+---
+- name : ping pong
+  hosts: all
+  tasks:
+    - name: ping module
+      ping:
+
