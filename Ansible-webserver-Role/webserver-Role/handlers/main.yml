@@ -1,0 +1,6 @@
+---
+# handlers file for webserver
+- name: restart webserver
+  ansible.builtin.service:
+    name: "{{ web_package }}"
+    state: restarted

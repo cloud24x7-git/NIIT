@@ -1,0 +1,30 @@
+---
+# tasks file for webserver
+- name: Install webserver package
+  apt:
+    name: "{{ web_package }}"
+    state: present
+    update_cache: yes
+- name: copy static configuration of apache
+  copy:
+    src: files/apache2.conf
+    dest: /etc/apache2/apache2.conf
+  notify: restart webserver
+- name: copy test file
+  copy:
+    src: files/hospital/
+    dest: /var/www/html/
+  notify: restart webserver
+
+      #- name: Deploy webserver config
+      #ansible.builtin.template:
+      #src: index.html.j2
+      #dest: /var/www/html/index.html
+      #notify: restart webserver
+
+- name: Ensure webserver is running and enabled
+  ansible.builtin.service:
+    name: "{{ web_package }}"
+    state: started
+    enabled: true
+
